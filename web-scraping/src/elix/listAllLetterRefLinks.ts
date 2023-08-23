@@ -10,6 +10,10 @@ const listAllIndexPages = async (letter): Promise<ElixBasicLink[]> => {
     const allIndexPageLinks = [] as ElixBasicLink[]
     const $ = await Requestor.getData(getLetterIndexPageLink(letter))
 
+    if (!$) {
+        return []
+    }
+
     $("nav.pagination a").each((_idx, el) => {
         const title = $(el).text()
         const link = $(el).attr("href")
@@ -24,6 +28,10 @@ const listAllLetterRefLinks = async (letter): Promise<ElixBasicLink[]> => {
     const indexPages = await listAllIndexPages(letter)
     for (const indexPage of indexPages) {
         const $ = await Requestor.getData(indexPage.link)
+
+        if (!$) {
+            continue
+        }
 
         $("ul.words > li > a").each((_idx, el) => {
             const title = $(el).text()

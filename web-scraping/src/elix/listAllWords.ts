@@ -13,6 +13,10 @@ const getAllDetailledLinks = async letter => {
     for (const refLink of allLetterRefLinks) {
         Logger.debug(`${ chalk.grey("Searching reflinks word:")} ${ refLink.title } (${refLink.link})`)
         const $ = await Requestor.getData(refLink.link)
+        if (!$) {
+            continue
+        }
+
         $("section.word").each((_idx, elt) => {
             const title = $(elt).find(".word__title").text()
             const link = $(elt).find(".infos a.button").attr("href")
@@ -33,19 +37,28 @@ const parseTitle = (text: string): [ string, WordType[] ] => {
 }
 
 const listAllWords = async (letter): Promise<ElixWord[]> => {
+    Logger.info(`Scraping Elix for the letter ${chalk.blue.bold(letter)}.`)
     const detailledLinks = await getAllDetailledLinks(letter);
-    // const detailledLinks = [{ title: "", link: "https://dico.elix-lsf.fr/dictionnaire/maman/n.f.-185867"}]
     const words = [] as ElixWord[]
 
     for (const detailLink of detailledLinks) {
         Logger.debug(`${ chalk.grey("Scraping word:")} ${ detailLink.title } (${detailLink.link})`)
         const $signVideos = await Requestor.getData(detailLink.link)
+
+        if (!$signVideos) {
+            continue
+        }
+
         if (!isCorrectWordPage($signVideos)) {
             Logger.warn(`${ chalk.bgRed("WARN:") } The url for the word ${ chalk.blue.bold(detailLink.title) } seems to lead to an uncorrect page: ${ detailLink.link }`)
             continue
         }
 
         const $definitionVideos = await Requestor.getData(detailLink.link + "/definition")
+
+        if (!$definitionVideos) {
+            continue
+        }
 
         const [word, type] = parseTitle($signVideos("h1").text())
         const definition = $signVideos(".definition").text()
