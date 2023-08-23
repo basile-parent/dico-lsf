@@ -8,14 +8,12 @@ class Requestor {
         return axios.get(url)
             .then((response: AxiosResponse) => {
                 const {data} = response
-                console.log("response", response)
                 return cheerio.load(data)
             })
             .catch((reason: AxiosError | Error) => {
                 Logger.error(`${ chalk.bgRed.whiteBright("ERROR")} Error while trying to fetch data from url ${ url }`, (reason as AxiosError).response || reason.message)
                 return null
             })
-
     }
 }
 
