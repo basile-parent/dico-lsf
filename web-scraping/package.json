@@ -12,7 +12,7 @@
     "axios": "^1.4.0",
     "chalk": "^5.3.0",
     "cheerio": "^1.0.0-rc.12",
-    "dotenv": "^16.3.1",
+    "dotenv-yaml": "^0.1.4",
     "lodash": "^4.17.21",
     "mongoose": "^7.4.4",
     "yargs": "^17.7.2"

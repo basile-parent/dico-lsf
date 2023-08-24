@@ -1,0 +1,6 @@
+{
+  "MONGO_URL": "mongodb://localhost:27017/test_db?retryWrites=true&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000",
+  "ELIX": {
+    "BASE_URL": "https://dico.elix-lsf.fr"
+  }
+}

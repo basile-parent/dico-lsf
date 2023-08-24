@@ -1,16 +1,20 @@
-import listAllWords from "@/elix/listAllWords";
+import scrapLetter from "@/elix/scrapLetter";
 import * as fs from "fs";
 import Logger from "@/common/logger";
 import getArguments from "@/elix/getArguments";
+import chalk from "chalk";
 
 const argv = getArguments()
 
 const letter = argv.l as string
+const word = argv.w as string
 
 if (letter) {
-    listAllWords(letter).then(allWords => {
+    scrapLetter(letter).then(allWords => {
         try {
-            fs.writeFileSync(`src/data/${letter}.json`, JSON.stringify(allWords));
+            const filePath = `src/data/${letter}.json`;
+            fs.writeFileSync(filePath, JSON.stringify(allWords));
+            Logger.info(`Wrote ${ chalk.blue(allWords.length) } words in the ${ chalk.blue(filePath) } file`)
         } catch (err) {
             Logger.error(err);
         }

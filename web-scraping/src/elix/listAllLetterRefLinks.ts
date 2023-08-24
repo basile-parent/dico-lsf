@@ -1,8 +1,9 @@
 import {ElixBasicLink} from "./types";
 import Logger from "@/common/logger";
 import chalk from "chalk";
-import {SITE_PREFIX} from "./constants";
 import Requestor from "@/common/requestor";
+import process from "process";
+import Config from "@/common/config";
 
 const getLetterIndexPageLink = (letter) => `https://dico.elix-lsf.fr/index-alphabetique/${letter}`
 
@@ -17,7 +18,7 @@ const listAllIndexPages = async (letter): Promise<ElixBasicLink[]> => {
     $("nav.pagination a").each((_idx, el) => {
         const title = $(el).text()
         const link = $(el).attr("href")
-        allIndexPageLinks.push({title: "Page " + title, link: SITE_PREFIX + link})
+        allIndexPageLinks.push({title: "Page " + title, link: Config.env.ELIX.BASE_URL + link})
     })
 
     return allIndexPageLinks
@@ -36,7 +37,7 @@ const listAllLetterRefLinks = async (letter): Promise<ElixBasicLink[]> => {
         $("ul.words > li > a").each((_idx, el) => {
             const title = $(el).text()
             const link = $(el).attr("href")
-            dictionnaryReferenceLink.push({title, link: SITE_PREFIX + link})
+            dictionnaryReferenceLink.push({title, link: Config.env.ELIX.BASE_URL + link})
         })
     }
 
