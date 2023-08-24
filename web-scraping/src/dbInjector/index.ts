@@ -9,7 +9,7 @@ mongoose.connect(Config.env.MONGO_URL)
 
         await injectFromFile("src/data/maman.json")
     })
-    .catch(console.error)
+    .catch(Logger.error)
     .finally(() => {
         mongoose.disconnect()
             .then(() => Logger.info("Disconnected from database"))

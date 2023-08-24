@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, no-console */
 import chalk from "chalk";
 
 const COLOR_GREY = "\x1b[37m"
@@ -9,6 +10,7 @@ class Logger {
         .replace(/T/, " ").         // replace T with a space
         replace(/\..+/, "")         // delete the dot and everything after
 
+    //
     debug = (...messages: any) => console.debug(`${COLOR_GREY}${this._getFormattedDate()} DEBUG`, ...messages, `${COLOR_NONE}`)
     info = (...messages: any) => console.log(`${this._getFormattedDate()} INFO `, ...messages)
     warn = (...messages: any) => console.warn(`${this._getFormattedDate()} ${ chalk.bgYellowBright.black("WARN") } `, ...messages)

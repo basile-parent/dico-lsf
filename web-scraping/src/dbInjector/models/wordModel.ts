@@ -1,9 +1,9 @@
-import mongoose from "mongoose"
+import mongoose, {ObjectId} from "mongoose"
 import {Word} from "@/common/word";
 import {ElixWord} from "@/elix/types";
 
 export type DBWord = Word & ElixWord & {
-    _id: any
+    _id: ObjectId
 }
 
 const VideoLinkSchema = {

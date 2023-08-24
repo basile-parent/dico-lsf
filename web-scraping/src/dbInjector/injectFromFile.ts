@@ -5,7 +5,6 @@ import Logger from "@/common/logger";
 import _ from "lodash";
 import chalk from "chalk";
 import {s} from "@/utils/stringUtils";
-import {ObjectId} from "mongodb";
 
 // Note: the file existence has already been checked
 const injectFromFile = async (jsonFilePath: string) => {
@@ -18,7 +17,7 @@ const injectFromFile = async (jsonFilePath: string) => {
         updated: 0
     }
 
-    for (let datum of data) {
+    for (const datum of data) {
         const existingWords = await WordModel.find({word: datum.word})
 
         Logger.debug(`Injecting '${datum.word}' (${datum.type.join(",")}): found ${existingWords.length} existing word${s(existingWords.length)}.`)
