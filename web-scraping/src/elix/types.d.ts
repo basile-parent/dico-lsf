@@ -1,10 +1,10 @@
-import Word, {VideoLink} from "@/common/word";
+import Word, { VideoLink } from "@/common/word"
 
 export type ElixWord = Word & {
-    definitionLinks: VideoLink[]
+  definitionLinks: VideoLink[]
 }
 
 export type ElixBasicLink = {
-    title: string
-    link: string
+  title: string
+  link: string
 }

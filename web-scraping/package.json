@@ -7,7 +7,8 @@
     "compile": "tsc",
     "scrap:elix": "npx ts-node src/elix/elix.ts",
     "inject": "npx ts-node src/dbInjector",
-    "lint:all": "eslint . --ext .ts --fix"
+    "lint:all": "eslint . --ext .ts --fix",
+    "prettier": "prettier --config .prettierrc --write src/{*,**/*}.ts"
   },
   "dependencies": {
     "axios": "^1.4.0",
@@ -24,6 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
     "eslint": "^8.47.0",
+    "prettier": "^3.0.2",
     "ts-node": "^10.9.1",
     "ts-patch": "^3.0.2",
     "tslint": "^6.1.3",

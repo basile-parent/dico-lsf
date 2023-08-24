@@ -1,48 +1,49 @@
-import {ElixBasicLink} from "./types";
-import Logger from "@/common/logger";
-import chalk from "chalk";
-import Requestor from "@/common/requestor";
-import Config from "@/common/config";
+import { ElixBasicLink } from "./types"
+import Logger from "@/common/logger"
+import chalk from "chalk"
+import Requestor from "@/common/requestor"
+import Config from "@/common/config"
 
 const getLetterIndexPageLink = (letter): string => Config.env.ELIX.LETTER_INDEX_URL.replace("[letter]", letter)
 
 const listAllIndexPages = async (letter): Promise<ElixBasicLink[]> => {
-    const allIndexPageLinks = [] as ElixBasicLink[]
-    const $ = await Requestor.getData(getLetterIndexPageLink(letter))
+  const allIndexPageLinks = [] as ElixBasicLink[]
+  const $ = await Requestor.getData(getLetterIndexPageLink(letter))
 
-    if (!$) {
-        return []
-    }
+  if (!$) {
+    return []
+  }
 
-    $("nav.pagination a").each((_idx, el) => {
-        const title = $(el).text()
-        const link = $(el).attr("href")
-        allIndexPageLinks.push({title: "Page " + title, link: Config.env.ELIX.BASE_URL + link})
-    })
+  $("nav.pagination a").each((_idx, el) => {
+    const title = $(el).text()
+    const link = $(el).attr("href")
+    allIndexPageLinks.push({ title: "Page " + title, link: Config.env.ELIX.BASE_URL + link })
+  })
 
-    return allIndexPageLinks
+  return allIndexPageLinks
 }
 
 const listAllWordsWithLetterSearchLinks = async (letter): Promise<ElixBasicLink[]> => {
-    const dictionnaryReferenceLink = [] as ElixBasicLink[]
-    const indexPages = await listAllIndexPages(letter)
-    for (const indexPage of indexPages) {
-        const $ = await Requestor.getData(indexPage.link)
+  const dictionnaryReferenceLink = [] as ElixBasicLink[]
+  const indexPages = await listAllIndexPages(letter)
+  for (const indexPage of indexPages) {
+    const $ = await Requestor.getData(indexPage.link)
 
-        if (!$) {
-            continue
-        }
-
-        $("ul.words > li > a").each((_idx, el) => {
-            const title = $(el).text()
-            const link = $(el).attr("href")
-            dictionnaryReferenceLink.push({title, link: Config.env.ELIX.BASE_URL + link})
-        })
+    if (!$) {
+      continue
     }
 
-    Logger.debug(`Found ${chalk.blue.bold(dictionnaryReferenceLink.length)} links for the letter ${chalk.blue.bold(letter)}.`)
-    return dictionnaryReferenceLink
+    $("ul.words > li > a").each((_idx, el) => {
+      const title = $(el).text()
+      const link = $(el).attr("href")
+      dictionnaryReferenceLink.push({ title, link: Config.env.ELIX.BASE_URL + link })
+    })
+  }
+
+  Logger.debug(
+    `Found ${chalk.blue.bold(dictionnaryReferenceLink.length)} links for the letter ${chalk.blue.bold(letter)}.`
+  )
+  return dictionnaryReferenceLink
 }
 
 export default listAllWordsWithLetterSearchLinks
-
