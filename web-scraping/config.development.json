@@ -1,5 +1,6 @@
 {
   "MONGO_URL": "mongodb://localhost:27017/dico-lsf?retryWrites=true&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000",
+  "LOG_LEVEL": "debug",
   "ELIX": {
     "BASE_URL": "https://dico.elix-lsf.fr",
     "SEARCH_URL": "https://dico.elix-lsf.fr/dictionnaire/[search]",

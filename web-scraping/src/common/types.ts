@@ -5,3 +5,11 @@ export type HelpOptions = {
 }
 
 export type HelpExamples = [string, string?][]
+
+export enum LogLevel {
+  debug = 10,
+  info = 20,
+  warn = 30,
+  error = 40,
+  off = 1000
+}

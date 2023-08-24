@@ -1,6 +1,9 @@
+import { LogLevel } from "@/common/types"
+
 export interface InternalConfig {
-  NODE_ENV: "development" | "production"
+  NODE_ENV?: "development" | "production"
   MONGO_URL: string
+  LOG_LEVEL?: LogLevel
   ELIX: {
     BASE_URL: string
     SEARCH_URL: string

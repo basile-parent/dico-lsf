@@ -51,9 +51,7 @@ const injectFromFile = async (jsonFilePath: string) => {
       if (result.matchedCount === 1) {
         stats.updated += result.modifiedCount
         Logger.debug(
-          `\t> Word '${datum.word}' (${existingWord._id}) updated in DB !!!!!!!!!!!!!!!!!!!!!!!!!!!!!${
-            !result.modifiedCount ? " (no change)" : ""
-          }`
+          `\t> Word '${datum.word}' (${existingWord._id}) updated in DB${!result.modifiedCount ? " (no change)" : ""}`
         )
       } else {
         Logger.warn(

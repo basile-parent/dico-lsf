@@ -4,7 +4,6 @@ import injectFromFile from "@/dbInjector/injectFromFile"
 import Config from "@/common/config"
 import getArguments from "@/dbInjector/getArguments"
 import chalk from "chalk"
-
 ;(async () => {
   const argv = await getArguments()
 
