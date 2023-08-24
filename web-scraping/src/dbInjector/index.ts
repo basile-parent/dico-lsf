@@ -1,0 +1,17 @@
+import "dotenv/config"
+import mongoose from "mongoose";
+import Logger from "@/common/logger";
+import injectFromFile from "@/dbInjector/injectFromFile";
+
+mongoose.connect(process.env.MONGO_URL)
+    .then(async () => {
+        Logger.info("Connected to database")
+
+        await injectFromFile("src/data/z.json")
+
+    })
+    .catch(console.error)
+    .finally(() => {
+        mongoose.disconnect()
+            .then(() => Logger.info("Disconnected from database"))
+    })

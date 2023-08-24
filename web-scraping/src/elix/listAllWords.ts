@@ -50,7 +50,7 @@ const listAllWords = async (letter): Promise<ElixWord[]> => {
         }
 
         if (!isCorrectWordPage($signVideos)) {
-            Logger.warn(`${ chalk.bgRed("WARN:") } The url for the word ${ chalk.blue.bold(detailLink.title) } seems to lead to an uncorrect page: ${ detailLink.link }`)
+            Logger.warn(`The url for the word ${ chalk.blue.bold(detailLink.title) } seems to lead to an uncorrect page: ${ detailLink.link }`)
             continue
         }
 

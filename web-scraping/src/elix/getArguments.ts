@@ -15,13 +15,13 @@ const getArguments = () => {
     const all = argv.a as boolean
 
     if (letter && all) {
-        Logger.error(`${ chalk.bgRed.whiteBright("ERROR")} You cannot pass both 'letter' and 'all' arguments.`)
+        Logger.error(`You cannot pass both 'letter' and 'all' arguments.`)
         process.exit(1)
     }
 
     const letterRegex = /^[a-zA-Z]$/
     if (!letterRegex.test(letter)) {
-        Logger.error(`${ chalk.bgRed.whiteBright("ERROR")} The 'letter' should be a single character between A-Z (case insensitive). Found: ${ chalk.red(letter || "(empty)") }`)
+        Logger.error(`The 'letter' should be a single character between A-Z (case insensitive). Found: ${ chalk.red(letter || "(empty)") }`)
         process.exit(1)
     }
 

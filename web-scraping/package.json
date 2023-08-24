@@ -5,12 +5,16 @@
   "scripts": {
     "prepare": "npx ts-patch install -s",
     "compile": "tsc",
-    "elix:scrap": "npx ts-node src/elix/elix.ts"
+    "scrap:elix": "npx ts-node src/elix/elix.ts",
+    "inject": "npx ts-node src/dbInjector"
   },
   "dependencies": {
     "axios": "^1.4.0",
     "chalk": "^5.3.0",
     "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.3.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^7.4.4",
     "yargs": "^17.7.2"
   },
   "devDependencies": {

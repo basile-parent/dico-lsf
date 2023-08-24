@@ -11,7 +11,7 @@ class Requestor {
                 return cheerio.load(data)
             })
             .catch((reason: AxiosError | Error) => {
-                Logger.error(`${ chalk.bgRed.whiteBright("ERROR")} Error while trying to fetch data from url ${ url }`, (reason as AxiosError).response || reason.message)
+                Logger.error(`Error while trying to fetch data from url ${ url }`, (reason as AxiosError).response || reason.message)
                 return null
             })
     }

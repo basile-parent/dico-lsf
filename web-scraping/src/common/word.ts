@@ -1,7 +1,7 @@
 export type WordType = "noun" | "proper noun" | "verb" | "adjective" | "adverb" | "interjection" | string
 export type VideoSource = "Elix" | "Stim" | string
 
-type Word = {
+export type Word = {
     word: string
     type: WordType[]
     definition?: string
