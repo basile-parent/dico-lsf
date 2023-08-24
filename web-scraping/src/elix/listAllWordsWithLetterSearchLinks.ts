@@ -1,6 +1,4 @@
 import { ElixBasicLink } from "./types"
-import Logger from "@/common/logger"
-import chalk from "chalk"
 import Requestor from "@/common/requestor"
 import Config from "@/common/config"
 
