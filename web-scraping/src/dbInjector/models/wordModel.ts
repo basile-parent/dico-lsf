@@ -13,7 +13,6 @@ const VideoLinkSchema = {
 }
 
 const WordSchema = new mongoose.Schema<DBWord>({
-    _id: { type: mongoose.Schema.ObjectId, required: true },
     word: { type: String, required: true },
     type: { type: [String], required: true },
     definition: { type: String, required: false },

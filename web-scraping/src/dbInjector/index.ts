@@ -7,7 +7,7 @@ mongoose.connect(Config.env.MONGO_URL)
     .then(async () => {
         Logger.info("Connected to database")
 
-        await injectFromFile("src/data/z.json")
+        await injectFromFile("src/data/maman.json")
     })
     .catch(console.error)
     .finally(() => {

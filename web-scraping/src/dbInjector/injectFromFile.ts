@@ -5,12 +5,13 @@ import Logger from "@/common/logger";
 import _ from "lodash";
 import chalk from "chalk";
 import {s} from "@/utils/stringUtils";
+import {ObjectId} from "mongodb";
 
 // Note: the file existence has already been checked
 const injectFromFile = async (jsonFilePath: string) => {
     Logger.info(`Injecting file ${chalk.blue(jsonFilePath.substring(jsonFilePath.lastIndexOf("/") + 1))} into the database.`)
     const data = JSON.parse(fs.readFileSync(jsonFilePath, "utf8"))
-        .filter(data => data.word === "Zambien") as Word[]
+    // .filter(data => data.word === "Zambien") as Word[]
 
     const stats = {
         inserted: 0,
@@ -20,22 +21,28 @@ const injectFromFile = async (jsonFilePath: string) => {
     for (let datum of data) {
         const existingWords = await WordModel.find({word: datum.word})
 
-        Logger.debug(`Injecting '${datum.word}' (${datum.type.join(",")}): found ${existingWords.length} corresponding word(s)`)
+        Logger.debug(`Injecting '${datum.word}' (${datum.type.join(",")}): found ${existingWords.length} existing word${s(existingWords.length)}.`)
 
         if (!existingWords.length) {
-            // await WordModel.create(datum)
+            const result = await WordModel.create(datum)
             stats.inserted++
-            Logger.debug(`\tWord '${datum.word}' inserted in DB`)
+            Logger.debug(`\t> Word '${datum.word}' inserted in DB:`, result._id)
         } else {
             const existingWord = findExistingWord(existingWords, datum)
             if (!existingWord) {
-                Logger.warn(`Cannot find the exact matching word between the ${ chalk.blue(existingWords.length) } occurences of the word '${ chalk.blue(datum.word)}'. This word will be ignored.`)
+                Logger.warn(`Cannot find the exact matching word between the ${chalk.blue(existingWords.length)} occurences of the word "${chalk.blue(datum.word)}". This word will be ignored.`)
                 continue
             }
-            Logger.debug(_.merge(existingWord, datum))
-            // await WordModel.updateOne({id: existingWord._id}, _.merge(existingWord, datum))
-            stats.updated++
-            Logger.debug(`\tWord '${datum.word}' updated in DB`)
+            const mergedObject = _.merge(existingWord, datum) as DBWord;
+
+            const result = await WordModel.updateOne({_id: existingWord._id}, mergedObject)
+
+            if (result.modifiedCount) {
+                stats.updated += result.modifiedCount
+                Logger.debug(`\t> Word '${datum.word}' (${existingWord._id}) updated in DB`)
+            } else {
+                Logger.warn(`The word "${chalk.blue(datum.word)}" cannot be updated. No or too many matches with _id ${ chalk.yellow(existingWord._id) }. Result:`, JSON.stringify(result))
+            }
         }
     }
 
