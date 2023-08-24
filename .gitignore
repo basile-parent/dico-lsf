@@ -3,5 +3,4 @@
 
 **/node_modules
 **/dist
-
-src/data
+web-scraping/src/data

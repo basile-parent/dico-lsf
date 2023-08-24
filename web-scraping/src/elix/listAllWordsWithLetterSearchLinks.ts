@@ -24,7 +24,7 @@ const listAllIndexPages = async (letter): Promise<ElixBasicLink[]> => {
     return allIndexPageLinks
 }
 
-const listAllLetterRefLinks = async (letter): Promise<ElixBasicLink[]> => {
+const listAllWordsWithLetterSearchLinks = async (letter): Promise<ElixBasicLink[]> => {
     const dictionnaryReferenceLink = [] as ElixBasicLink[]
     const indexPages = await listAllIndexPages(letter)
     for (const indexPage of indexPages) {
@@ -45,5 +45,5 @@ const listAllLetterRefLinks = async (letter): Promise<ElixBasicLink[]> => {
     return dictionnaryReferenceLink
 }
 
-export default listAllLetterRefLinks
+export default listAllWordsWithLetterSearchLinks
 

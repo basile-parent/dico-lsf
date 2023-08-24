@@ -2,6 +2,7 @@ export interface InternalConfig {
     MONGO_URL: string;
     ELIX: {
         BASE_URL: string
+        SEARCH_URL: string
     }
 }
 

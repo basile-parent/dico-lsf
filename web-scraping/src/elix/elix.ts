@@ -3,6 +3,7 @@ import * as fs from "fs";
 import Logger from "@/common/logger";
 import getArguments from "@/elix/getArguments";
 import chalk from "chalk";
+import scrapWord from "@/elix/scrapWord";
 
 const argv = getArguments()
 
@@ -13,6 +14,16 @@ if (letter) {
     scrapLetter(letter).then(allWords => {
         try {
             const filePath = `src/data/${letter}.json`;
+            fs.writeFileSync(filePath, JSON.stringify(allWords));
+            Logger.info(`Wrote ${ chalk.blue(allWords.length) } words in the ${ chalk.blue(filePath) } file`)
+        } catch (err) {
+            Logger.error(err);
+        }
+    })
+} else if (word) {
+    scrapWord(word).then(allWords => {
+        try {
+            const filePath = `src/data/${word}.json`;
             fs.writeFileSync(filePath, JSON.stringify(allWords));
             Logger.info(`Wrote ${ chalk.blue(allWords.length) } words in the ${ chalk.blue(filePath) } file`)
         } catch (err) {
