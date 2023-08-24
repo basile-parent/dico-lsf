@@ -2,6 +2,7 @@
   "MONGO_URL": "mongodb://localhost:27017/test_db?retryWrites=true&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000",
   "ELIX": {
     "BASE_URL": "https://dico.elix-lsf.fr",
-    "SEARCH_URL": "https://dico.elix-lsf.fr/dictionnaire/[search]"
+    "SEARCH_URL": "https://dico.elix-lsf.fr/dictionnaire/[search]",
+    "LETTER_INDEX_URL": "https://dico.elix-lsf.fr/index-alphabetique/[letter]"
   }
 }

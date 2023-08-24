@@ -1,14 +1,16 @@
 export interface InternalConfig {
+    NODE_ENV: "development" | "production";
     MONGO_URL: string;
     ELIX: {
         BASE_URL: string
         SEARCH_URL: string
+        LETTER_INDEX_URL: string
     }
 }
 
 declare global {
     namespace NodeJS {
-        interface ProcessEnv extends InternalConfig {
+        interface ProcessEnv {
             NODE_ENV: "development" | "production";
         }
     }

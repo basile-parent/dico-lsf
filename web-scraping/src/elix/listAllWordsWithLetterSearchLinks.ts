@@ -2,10 +2,9 @@ import {ElixBasicLink} from "./types";
 import Logger from "@/common/logger";
 import chalk from "chalk";
 import Requestor from "@/common/requestor";
-import process from "process";
 import Config from "@/common/config";
 
-const getLetterIndexPageLink = (letter) => `https://dico.elix-lsf.fr/index-alphabetique/${letter}`
+const getLetterIndexPageLink = (letter): string => Config.env.ELIX.LETTER_INDEX_URL.replace("[letter]", letter)
 
 const listAllIndexPages = async (letter): Promise<ElixBasicLink[]> => {
     const allIndexPageLinks = [] as ElixBasicLink[]

@@ -7,12 +7,11 @@ import process from "process";
 class Config {
 
     private static DEFAULT_CONFIG_FILE = `config.${ process.env.NODE_ENV || "development" }.json`
-    private config: InternalConfig = process.env
+    private config: InternalConfig = {} as InternalConfig
 
     constructor() {
         const argv = yargs(hideBin(process.argv)).parseSync()
         const filePath = argv.config as string || Config.DEFAULT_CONFIG_FILE
-        console.log("Load config", filePath)
 
         const loadedConfig = JSON.parse(fs.readFileSync(filePath, "utf-8"));
         this.config = {
