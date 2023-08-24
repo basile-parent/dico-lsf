@@ -7,18 +7,18 @@ import { HelpExamples, HelpOptions } from "@/common/types"
 const helpOptions: HelpOptions = {
   l: {
     type: "string",
-    description: "Scrap a letter: all words starting with this letter (cannot be used with 'all' argument)",
+    description: `Scrap a letter: all words starting with this letter (cannot be used with "all" argument)`,
     alias: ["letter"]
   },
   w: {
     type: "string",
-    description: "Scrap a word and all it's definitions (cannot be used with 'all' argument)",
+    description: `Scrap a word and all it's definitions (cannot be used with "all" argument)`,
     default: false,
     alias: ["word"]
   },
   a: {
     type: "boolean",
-    description: "Scrap all letters (cannot be used with 'letter' or 'word' argument)",
+    description: `Scrap all letters (cannot be used with "letter" or "word" argument)`,
     default: false,
     alias: ["all"]
   },
@@ -42,14 +42,14 @@ const getArguments = () => {
   const all = argv.a as boolean
 
   if ((letter || word) && all) {
-    Logger.error(`You cannot pass both 'letter' and 'all' arguments.`)
+    Logger.error(`You cannot pass both "letter" and "all" arguments.`)
     process.exit(1)
   }
 
   const letterRegex = /^[a-zA-Z]$/
   if (letter && !letterRegex.test(letter)) {
     Logger.error(
-      `The 'letter' should be a single character between A-Z (case insensitive). Found: ${chalk.red(
+      `The "letter" should be a single character between A-Z (case insensitive). Found: ${chalk.red(
         letter || "(empty)"
       )}`
     )

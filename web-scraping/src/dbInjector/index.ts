@@ -2,15 +2,21 @@ import mongoose from "mongoose"
 import Logger from "@/common/logger"
 import injectFromFile from "@/dbInjector/injectFromFile"
 import Config from "@/common/config"
+import getArguments from "@/dbInjector/getArguments"
+import chalk from "chalk";
 
-mongoose
-  .connect(Config.env.MONGO_URL)
-  .then(async () => {
-    Logger.info("Connected to database")
+(async() => {
+    const argv = await getArguments()
 
-    await injectFromFile("src/data/maman.json")
-  })
-  .catch(Logger.error)
-  .finally(() => {
-    mongoose.disconnect().then(() => Logger.info("Disconnected from database"))
-  })
+    mongoose
+        .connect(Config.env.MONGO_URL)
+        .then(async () => {
+            Logger.info(chalk.bgBlue("Connected to database"))
+
+            await injectFromFile(argv.filepath as string)
+        })
+        .catch(Logger.error)
+        .finally(() => {
+            mongoose.disconnect().then(() => Logger.info(chalk.bgBlue("Disconnected from database")))
+        })
+})()

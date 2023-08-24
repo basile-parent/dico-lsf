@@ -40,9 +40,6 @@ const listAllWordsWithLetterSearchLinks = async (letter): Promise<ElixBasicLink[
     })
   }
 
-  Logger.debug(
-    `Found ${chalk.blue.bold(dictionnaryReferenceLink.length)} links for the letter ${chalk.blue.bold(letter)}.`
-  )
   return dictionnaryReferenceLink
 }
 

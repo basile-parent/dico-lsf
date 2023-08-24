@@ -7,4 +7,5 @@ export type ElixWord = Word & {
 export type ElixBasicLink = {
   title: string
   link: string
+  traceLink?: string
 }
