@@ -10,15 +10,9 @@ const helpOptions: HelpOptions = {
     description: `Scrap a letter: all words starting with this letter (cannot be used with "all" argument)`,
     alias: ["letter"]
   },
-  w: {
-    type: "string",
-    description: `Scrap a word and all it's definitions (cannot be used with "all" argument)`,
-    default: false,
-    alias: ["word"]
-  },
   a: {
     type: "boolean",
-    description: `Scrap all letters (cannot be used with "letter" or "word" argument)`,
+    description: `Scrap all letters (cannot be used with "letter" argument)`,
     default: false,
     alias: ["all"]
   },
@@ -26,27 +20,22 @@ const helpOptions: HelpOptions = {
 }
 
 const helpExamples: HelpExamples = [
-  [`npm run scrap:elix -- ${chalk.bold("-l=a")}`, "Scrap the website for the letter A"],
-  [
-    `npm run scrap:elix -- ${chalk.bold(`--word="eau de bouchain"`)}`,
-    `Scrap the website for the word "eau de bouchain"`
-  ],
-  [`npm run scrap:elix -- ${chalk.bold("-a")}`, "Scrap the website for all letters"]
+  [`npm run scrap:lsfplus -- ${chalk.bold("-l=a")}`, "Scrap the website for the letter A"],
+  [`npm run scrap:lsfplus -- ${chalk.bold("-a")}`, "Scrap the website for all letters"]
 ]
 
 const getArguments = () => {
   const argv = yargs(hideBin(process.argv)).options(helpOptions).example(helpExamples).help().parseSync()
 
   const letter = argv.l as string
-  const word = argv.w as string
   const all = argv.a as boolean
 
-  if ((letter || word) && all) {
+  if (letter && all) {
     Logger.error(`You cannot pass both "letter" and "all" arguments.`)
     process.exit(1)
   }
 
-  if (!letter && !word && !all) {
+  if (!letter && !all) {
     Logger.error(`You have to add at least one argument to specify what to scrap.`)
     process.exit(1)
   }

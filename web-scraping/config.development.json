@@ -5,5 +5,9 @@
     "BASE_URL": "https://dico.elix-lsf.fr",
     "SEARCH_URL": "https://dico.elix-lsf.fr/dictionnaire/[search]",
     "LETTER_INDEX_URL": "https://dico.elix-lsf.fr/index-alphabetique/[letter]"
+  },
+  "LSFPLUS": {
+    "BASE_URL": "https://www.lsfplus.fr",
+    "LETTER_INDEX_URL": "https://www.lsfplus.fr/dico/[letter]"
   }
 }

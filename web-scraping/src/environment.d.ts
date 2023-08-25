@@ -9,6 +9,10 @@ export interface InternalConfig {
     SEARCH_URL: string
     LETTER_INDEX_URL: string
   }
+  LSFPLUS: {
+    BASE_URL: string
+    LETTER_INDEX_URL: string
+  }
 }
 
 declare global {

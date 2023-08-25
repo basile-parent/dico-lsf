@@ -13,3 +13,9 @@ export enum LogLevel {
   error = 40,
   off = 1000
 }
+
+export type BasicLink = {
+  title: string
+  link: string
+  traceLink?: string
+}

@@ -1,5 +1,5 @@
 export type WordType = "noun" | "proper noun" | "verb" | "adjective" | "adverb" | "interjection" | string
-export type VideoSource = "Elix" | "Stim" | string
+export type VideoSource = "Elix" | "Stim" | "LSFPlus"
 
 export type Word = {
   word: string

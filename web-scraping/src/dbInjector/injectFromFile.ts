@@ -19,12 +19,12 @@ const injectFromFile = async (jsonFilePath: string) => {
   }
 
   for (const datum of data) {
-    const existingWords = await WordModel.find({ word: datum.word })
+    const existingWords = await WordModel.find({ word: new RegExp(datum.word, "i") })
 
     Logger.debug(
-      `Injecting '${datum.word}' (${datum.type.join(",")}): found ${existingWords.length} existing word${s(
+      `Injecting '${datum.word}'${datum.type.length ? ` (${datum.type.join(",")})` : ""}: found ${
         existingWords.length
-      )}.`
+      } existing word${s(existingWords.length)}.`
     )
 
     if (!existingWords.length) {
@@ -40,7 +40,7 @@ const injectFromFile = async (jsonFilePath: string) => {
         const result = await WordModel.create(datum)
         stats.inserted++
         Logger.debug(
-          `There ${existingWords.length} occurence${s(existingWords.length)} of the word "${
+          `\t> There ${existingWords.length} occurence${s(existingWords.length)} of the word "${
             datum.word
           }" exist in the database but with no exact match. This word has been inserted.`,
           result._id
@@ -50,10 +50,12 @@ const injectFromFile = async (jsonFilePath: string) => {
 
       // The existing word has either be found (exact match) or the datum is not fill enough to find it so we merge it with
       // any existing word
-      existingWord = existingWord || existingWord[0]
+      existingWord = existingWord || existingWords[0]
 
-      const mergedObject = _.merge(existingWord, datum) as DBWord
-      const result = await WordModel.updateOne({ _id: existingWord._id }, mergedObject)
+      const mergedObject = _.clone(existingWord)
+      _.mergeWith(mergedObject, datum, mergeArrays)
+
+      const result = await WordModel.updateOne({ _id: mergedObject._id }, mergedObject)
 
       if (result.matchedCount === 1) {
         stats.updated += result.modifiedCount
@@ -76,6 +78,12 @@ const injectFromFile = async (jsonFilePath: string) => {
       stats.updated
     )} word${s(stats.updated)} updated.`
   )
+}
+
+function mergeArrays(objValue, srcValue) {
+  if (_.isArray(objValue)) {
+    return objValue.concat(srcValue)
+  }
 }
 
 const findExactMatchExistingWord = (existingWords: DBWord[], wordToTreat: Word): DBWord | null => {
@@ -117,11 +125,7 @@ const findMatchingWords = (
   filterFn: (word: DBWord) => boolean
 ): DBWord | null => {
   const matchingWords = existingWords.filter(filterFn)
-  if (matchingWords.length === 1) {
-    return matchingWords[0]
-  }
-
-  return null
+  return matchingWords.length === 1 ? matchingWords[0] : null
 }
 
 export default injectFromFile

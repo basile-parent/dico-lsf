@@ -1,4 +1,5 @@
-import { ElixBasicLink, ElixWord } from "./types"
+import { ElixWord } from "./types"
+import { BasicLink } from "@/common/types"
 import Requestor from "@/common/requestor"
 import { getWordType, VideoLink, WordType } from "@/common/word"
 import Logger from "@/common/logger"
@@ -6,7 +7,7 @@ import chalk from "chalk"
 import Config from "@/common/config"
 import elixUtils from "@/elix/elixUtils"
 
-export const listAllDetailLinksFromSearchPage = async (searchPageLink: ElixBasicLink): Promise<ElixBasicLink[]> => {
+export const listAllDetailLinksFromSearchPage = async (searchPageLink: BasicLink): Promise<BasicLink[]> => {
   const $ = await Requestor.getData(searchPageLink.link)
   if (!$) {
     throw new Error("Cannot get data from url " + searchPageLink.link)
@@ -21,7 +22,7 @@ export const listAllDetailLinksFromSearchPage = async (searchPageLink: ElixBasic
           title,
           link: Config.env.ELIX.BASE_URL + link,
           traceLink: searchPageLink.link
-        } as ElixBasicLink
+        } as BasicLink
       })
       .get()
       // Remove duplicates
@@ -29,7 +30,7 @@ export const listAllDetailLinksFromSearchPage = async (searchPageLink: ElixBasic
   )
 }
 
-export const extractWordFromDetailPage = async (detailLink: ElixBasicLink): Promise<ElixWord | null> => {
+export const extractWordFromDetailPage = async (detailLink: BasicLink): Promise<ElixWord | null> => {
   Logger.debug(`${chalk.grey("Extracting word:")} ${detailLink.title} (${detailLink.link})`)
   const $signVideos = await Requestor.getData(detailLink.link)
 
@@ -57,7 +58,7 @@ export const extractWordFromDetailPage = async (detailLink: ElixBasicLink): Prom
   return { word, type, definition, links, definitionLinks, sources }
 }
 
-const extractWord = async (searchWordLink: ElixBasicLink): Promise<ElixWord[]> => {
+const extractWord = async (searchWordLink: BasicLink): Promise<ElixWord[]> => {
   const detailLinks = await listAllDetailLinksFromSearchPage(searchWordLink)
   const words = [] as ElixWord[]
 
@@ -76,10 +77,10 @@ const extractWord = async (searchWordLink: ElixBasicLink): Promise<ElixWord[]> =
   return words
 }
 
-const scrapWord = async (word: string | ElixBasicLink): Promise<ElixWord[]> => {
-  const wordLink = (word as ElixBasicLink).title
-    ? (word as ElixBasicLink)
-    : ({ title: word, link: elixUtils.buidSearchPageUrl(word as string) } as ElixBasicLink)
+const scrapWord = async (word: string | BasicLink): Promise<ElixWord[]> => {
+  const wordLink = (word as BasicLink).title
+    ? (word as BasicLink)
+    : ({ title: word, link: elixUtils.buidSearchPageUrl(word as string) } as BasicLink)
 
   Logger.info(`Scraping Elix for all definitions of the word "${chalk.blue.bold(wordLink.title)}".`)
 

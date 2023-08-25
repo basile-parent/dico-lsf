@@ -13,7 +13,7 @@ const word = argv.w as string
 if (letter) {
   scrapLetter(letter).then((allWords) => {
     try {
-      const filePath = `src/data/${letter}.json`
+      const filePath = `src/data/elix-${letter}.json`
       fs.writeFileSync(filePath, JSON.stringify(allWords))
       Logger.info(`Wrote ${chalk.blue(allWords.length)} words in the ${chalk.blue(filePath)} file`)
     } catch (err) {
@@ -23,7 +23,7 @@ if (letter) {
 } else if (word) {
   scrapWord(word).then((allWords) => {
     try {
-      const filePath = `src/data/${generateFilename(word)}.json`
+      const filePath = `src/data/elix-${generateFilename(word)}.json`
       fs.writeFileSync(filePath, JSON.stringify(allWords))
       Logger.info(`Wrote ${chalk.blue(allWords.length)} words in the ${chalk.blue(filePath)} file`)
     } catch (err) {
