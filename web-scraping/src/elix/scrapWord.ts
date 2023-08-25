@@ -52,7 +52,7 @@ export const extractWordFromDetailPage = async (detailLink: ElixBasicLink): Prom
   const links = getAllPageVideos($signVideos)
   const definitionLinks = $definitionVideos ? getAllPageVideos($definitionVideos) : undefined
 
-  const sources = [ detailLink.link ]
+  const sources = [detailLink.link]
 
   return { word, type, definition, links, definitionLinks, sources }
 }
