@@ -17,6 +17,7 @@ const WordSchema = new mongoose.Schema<DBWord>({
   word: { type: String, required: true },
   type: { type: [String], required: true },
   definition: { type: String, required: false },
+  sources: { type: [String], required: true },
   links: { type: [VideoLinkSchema], required: true },
   definitionLinks: { type: [VideoLinkSchema], required: false }
 })

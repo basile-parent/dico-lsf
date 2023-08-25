@@ -5,6 +5,7 @@ export type Word = {
   word: string
   type: WordType[]
   definition?: string
+  sources: string[]
   links: VideoLink[]
 }
 
